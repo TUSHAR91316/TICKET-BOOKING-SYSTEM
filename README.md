@@ -1,4 +1,4 @@
-# 🚌 Bus Ticket Booking System (Modex Assessment)
+# 🚌 Bus Ticket Booking System (Moderx Assessment)
 
 A high-performance, concurrent **Bus Ticket Booking System** built with **Node.js, Express, TypeScript, PostgreSQL (Prisma)**, and **React**.
 
