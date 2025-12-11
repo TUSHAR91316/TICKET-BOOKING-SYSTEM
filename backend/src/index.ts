@@ -3,7 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-// import routes from './routes';
+import routes from './routes/index.js';
 
 dotenv.config();
 
@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
     res.send('Bus Booking API is running');
 });
 
-// app.use('/api', routes);
+app.use('/api', routes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
