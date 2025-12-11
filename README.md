@@ -1,4 +1,4 @@
-# 🚌 Bus Ticket Booking System (Modex Assessment)
+# 🚌 Bus Ticket Booking System (Moderx Assessment)
 
 **🔴 Live Demo (Frontend):** [https://ticket-booking-system-alpha.vercel.app/](https://ticket-booking-system-alpha.vercel.app/)
 **🟢 Live API (Backend):** [https://ticket-booking-system-shz7.onrender.com](https://ticket-booking-system-shz7.onrender.com)
