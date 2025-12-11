@@ -1,5 +1,8 @@
 # 🚌 Bus Ticket Booking System (Modex Assessment)
 
+**🔴 Live Demo (Frontend):** [https://ticket-booking-system-alpha.vercel.app/](https://ticket-booking-system-alpha.vercel.app/)
+**🟢 Live API (Backend):** [https://ticket-booking-system-shz7.onrender.com](https://ticket-booking-system-shz7.onrender.com)
+
 A high-performance, concurrent **Bus Ticket Booking System** built with **Node.js, Express, TypeScript, PostgreSQL (Prisma)**, and **React**.
 
 This project demonstrates a robust implementation of a booking system that handles **concurrency anomalies** (like double-booking) using **Database Row-Level Locking**.
