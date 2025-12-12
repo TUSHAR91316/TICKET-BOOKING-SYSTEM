@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  title: Bus Ticket Booking API
+  description: API for managing bus trips and booking seats with concurrency handling.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api
+    description: Local Development Server
+  - url: https://ticket-booking-system-shz7.onrender.com/api
+    description: Production Server (Render)
+paths:
+  /trips:
+    get:
+      summary: List all trips
+      description: Returns a list of available bus trips with bus details.
+      responses:
+        '200':
+          description: A JSON array of trips
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Trip'
+  /trips/{id}:
+    get:
+      summary: Get Trip Details
+      description: Returns details of a specific trip including seat availability.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Trip object with Seats
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Trip'
+                  - type: object
+                    properties:
+                      seats:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Seat'
+        '404':
+          description: Trip not found
+  /bookings:
+    post:
+      summary: Book a Seat
+      description: Attempts to book a specific seat. Handles concurrency; will fail if seat is already locked/booked.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                seatId:
+                  type: integer
+      responses:
+        '201':
+          description: Booking Created (Pending)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        '409':
+          description: Conflict - Seat already booked or pending
+  /admin/bus:
+    post:
+      summary: Create Bus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bus'
+      responses:
+        '201':
+          description: Bus created
+  /admin/trip:
+    post:
+      summary: Create Trip
+      requestBody:
+        content:
+          application/json:
+             schema:
+               type: object
+               properties:
+                 busId:
+                   type: integer
+                 source:
+                   type: string
+                 destination:
+                   type: string
+                 startTime:
+                   type: string
+                   format: date-time
+                 endTime:
+                   type: string
+                   format: date-time
+                 price:
+                   type: number
+      responses:
+         '201':
+           description: Trip created
+
+components:
+  schemas:
+    Bus:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        number:
+          type: string
+        type:
+          type: string
+        totalSeats:
+          type: integer
+    Trip:
+      type: object
+      properties:
+        id:
+          type: integer
+        source:
+          type: string
+        destination:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        price:
+          type: number
+        bus:
+          $ref: '#/components/schemas/Bus'
+    Seat:
+      type: object
+      properties:
+        id:
+          type: integer
+        seatNumber:
+          type: string
+        status:
+          type: string
+          enum: [AVAILABLE, PENDING, BOOKED]
+    Booking:
+      type: object
+      properties:
+        id:
+          type: integer
+        status:
+          type: string
+          enum: [PENDING, CONFIRMED, FAILED]
